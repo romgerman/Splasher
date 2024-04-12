@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0ikcvgtfkd2b"]
+
+[ext_resource type="Script" path="res://addons/splasher/ui_splasher_dock.gd" id="1_pthjc"]
+[ext_resource type="Script" path="res://addons/splasher/ui_item_list.gd" id="2_iex82"]
+
+[node name="Splasher" type="Control"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pthjc")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="toggle_plugin" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Enabled"
+
+[node name="ItemList" type="ItemList" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+allow_reselect = true
+fixed_icon_size = Vector2i(32, 32)
+script = ExtResource("2_iex82")
+
+[connection signal="toggled" from="VBoxContainer/toggle_plugin" to="." method="_on_toggle_plugin_toggled"]
+[connection signal="item_selected" from="VBoxContainer/ItemList" to="VBoxContainer/ItemList" method="_on_item_selected"]

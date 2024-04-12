@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://2gtrnw8odaky"]
+
+[ext_resource type="Script" path="res://addons/splasher/editor_manager.gd" id="1_4klrd"]
+
+[node name="editor_manager" type="Node"]
+script = ExtResource("1_4klrd")

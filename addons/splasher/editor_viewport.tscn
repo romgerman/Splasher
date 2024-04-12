@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drwa44y36momv"]
+
+[ext_resource type="Script" path="res://addons/splasher/editor_viewport.gd" id="1_ja7y8"]
+
+[node name="editor_viewport" type="Node3D"]
+script = ExtResource("1_ja7y8")
