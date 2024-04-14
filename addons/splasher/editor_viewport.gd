@@ -11,11 +11,9 @@ var on_object = false
 var add_rotation_rad = 0.0
 var add_scale = Vector3(1.0, 1.0, 1.0)
 
-var scale_iter = Vector3(0.5, 0.5, 0.5)
-var rot_iter = 0.05
-
 func _ready():
 	decal = Decal.new()
+	decal.upper_fade
 	_get_editor_manager().select_decal.connect(_decal_selected)
 
 func _decal_selected(path: String):
@@ -27,6 +25,10 @@ func _create_decal():
 	var root = EditorInterface.get_edited_scene_root()
 	decal_dupe = decal.duplicate()
 	decal_dupe.process_mode = Node.PROCESS_MODE_DISABLED
+	var upper_fade = _get_editor_manager().upper_fade
+	var lower_fade = _get_editor_manager().lower_fade
+	decal_dupe.upper_fade = upper_fade
+	decal_dupe.lower_fade = lower_fade
 	root.add_child(decal_dupe, true)
 	decal_dupe.owner = root
 
@@ -41,6 +43,9 @@ func _place_decal():
 
 func _input(event):
 	var event_was_handled = false
+	var rot_iter = _get_editor_manager().rotation_step
+	var scale_step = _get_editor_manager().scale_step
+	var scale_iter = Vector3(scale_step, scale_step, scale_step)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			var viewport = EditorInterface.get_editor_viewport_3d(0)
@@ -95,7 +100,8 @@ func _process(delta):
 		last_collider = collider
 		var normal: Vector3 = result.normal
 		
-		DebugDraw3D.draw_line(result.position, result.position + normal, Color.RED)
+		if type_exists("DebugDraw3D"):
+			Engine.get_singleton("DebugDraw3D").draw_line(result.position, result.position + normal, Color.RED)
 		
 		if not decal_dupe:
 			_create_decal()
@@ -108,8 +114,9 @@ func _process(delta):
 					Quaternion(normal, add_rotation_rad)
 				)
 			else:
+				var rot = rotate_around.angle_to(normal)
 				decal_dupe.transform.basis = Basis(
-					Quaternion(rotate_around, deg_to_rad(90)) *
+					Quaternion(rotate_around, rot) *
 					Quaternion(normal.cross(rotate_around), add_rotation_rad)
 				)
 	else:
