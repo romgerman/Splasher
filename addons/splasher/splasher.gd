@@ -11,7 +11,6 @@ func _enter_tree():
 	add_autoload_singleton(EDITOR_MANAGER_NAME, "res://addons/splasher/editor_manager.tscn")
 	add_autoload_singleton(EDITOR_VIEWPORT_NAME, "res://addons/splasher/editor_viewport.tscn")
 	add_control_to_bottom_panel(dock, "Splasher")
-	add_control_to_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_BOTTOM)
 	#Engine.get_main_loop().root.get_node_or_null("SplasherEditorManager").undo_redo = get_undo_redo()
 
 func _exit_tree():

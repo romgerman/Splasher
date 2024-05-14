@@ -114,11 +114,7 @@ func _process(delta):
 					Quaternion(normal, add_rotation_rad)
 				)
 			else:
-				var rot = rotate_around.angle_to(normal)
-				decal_dupe.transform.basis = Basis(
-					Quaternion(rotate_around, rot) *
-					Quaternion(normal.cross(rotate_around), add_rotation_rad)
-				)
+				decal_dupe.transform.basis = Basis(rotate_around, normal, normal.cross(rotate_around)).rotated(normal, add_rotation_rad)
 	else:
 		on_object = false
 		if last_collider and decal_dupe:
