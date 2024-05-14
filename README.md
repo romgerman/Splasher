@@ -8,6 +8,8 @@ Models should have collision shapes to place decals on them
 
 ## Keybinds
 
-Shift — rotate
-Ctrl — scale
+Shift + Mouse Wheel — rotate
+
+Ctrl + Mouse Wheel — scale
+
 LMB — place
