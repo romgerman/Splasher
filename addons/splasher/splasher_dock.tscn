@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d0ikcvgtfkd2b"]
 
-[ext_resource type="Script" path="res://addons/splasher/ui_splasher_dock.gd" id="1_pthjc"]
-[ext_resource type="Script" path="res://addons/splasher/ui_item_list.gd" id="2_iex82"]
+[ext_resource type="Script" uid="uid://jnhfhmgakhuo" path="res://addons/splasher/ui_splasher_dock.gd" id="1_pthjc"]
+[ext_resource type="Script" uid="uid://dmht8cuvxe0gv" path="res://addons/splasher/ui_item_list.gd" id="2_iex82"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e4qao"]
 outline_size = 1
@@ -48,7 +48,6 @@ label_settings = SubResource("LabelSettings_e4qao")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
 
 [node name="UpperFadeLabel" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -74,6 +73,12 @@ size_flags_horizontal = 3
 allow_reselect = true
 fixed_icon_size = Vector2i(32, 32)
 script = ExtResource("2_iex82")
+
+[node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/ItemList"]
+oversampling_override = 1.0
+item_count = 1
+item_0/text = "Remove"
+item_0/id = 0
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -116,6 +121,8 @@ value = 0.05
 [connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/toggle_plugin" to="." method="_on_toggle_plugin_toggled"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/UpperFadeLineEdit" to="." method="_on_upper_fade_line_edit_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/LowerFadeLineEdit" to="." method="_on_lower_fade_line_edit_value_changed"]
+[connection signal="item_clicked" from="VBoxContainer/ItemList" to="VBoxContainer/ItemList" method="_on_item_clicked"]
 [connection signal="item_selected" from="VBoxContainer/ItemList" to="VBoxContainer/ItemList" method="_on_item_selected"]
+[connection signal="id_pressed" from="VBoxContainer/ItemList/PopupMenu" to="VBoxContainer/ItemList" method="_on_popup_menu_id_pressed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer2/VBoxContainer2/VBoxContainer/ScaleSpinBox" to="." method="_on_scale_spin_box_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer2/VBoxContainer2/VBoxContainer/RotationSpinBox" to="." method="_on_rotation_spin_box_value_changed"]

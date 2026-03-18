@@ -22,14 +22,20 @@ func _decal_selected(path: String):
 
 func _create_decal():
 	if decal_dupe: return
-	var root = EditorInterface.get_edited_scene_root()
+	var root := EditorInterface.get_edited_scene_root()
 	decal_dupe = decal.duplicate()
 	decal_dupe.process_mode = Node.PROCESS_MODE_DISABLED
 	var upper_fade = _get_editor_manager().upper_fade
 	var lower_fade = _get_editor_manager().lower_fade
 	decal_dupe.upper_fade = upper_fade
 	decal_dupe.lower_fade = lower_fade
-	root.add_child(decal_dupe, true)
+	var pivot := root
+	var editor_selection := EditorInterface.get_selection()
+	if editor_selection.get_selected_nodes().size() == 1:
+		var selected_node := editor_selection.get_selected_nodes()[0]
+		if selected_node.get_parent():
+			pivot = selected_node.get_parent()
+	pivot.add_child(decal_dupe, true)
 	decal_dupe.owner = root
 
 func _remove_decal():
@@ -106,7 +112,7 @@ func _process(delta):
 		if not decal_dupe:
 			_create_decal()
 		elif decal_dupe:
-			decal_dupe.position = result.position
+			decal_dupe.global_position = result.position
 			decal_dupe.size = add_scale
 			var rotate_around = normal.cross(Vector3.UP).normalized()
 			if Vector3.UP.cross(normal) == Vector3.ZERO:
