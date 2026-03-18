@@ -10,6 +10,8 @@ var decal_list: Array[String] = []
 
 var scale_step = 0.5
 var rotation_step = 0.05
+var snap_step = 0.5
+var enable_snap := false
 
 var upper_fade = 0.3
 var lower_fade = 0.3

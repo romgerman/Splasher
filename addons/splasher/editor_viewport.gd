@@ -14,7 +14,7 @@ var add_scale = Vector3(1.0, 1.0, 1.0)
 func _ready():
 	decal = Decal.new()
 	decal.upper_fade
-	_get_editor_manager().select_decal.connect(_decal_selected)
+	get_editor_manager().select_decal.connect(_decal_selected)
 
 func _decal_selected(path: String):
 	var texture = ImageTexture.create_from_image(Image.load_from_file(path))
@@ -25,8 +25,8 @@ func _create_decal():
 	var root := EditorInterface.get_edited_scene_root()
 	decal_dupe = decal.duplicate()
 	decal_dupe.process_mode = Node.PROCESS_MODE_DISABLED
-	var upper_fade = _get_editor_manager().upper_fade
-	var lower_fade = _get_editor_manager().lower_fade
+	var upper_fade = get_editor_manager().upper_fade
+	var lower_fade = get_editor_manager().lower_fade
 	decal_dupe.upper_fade = upper_fade
 	decal_dupe.lower_fade = lower_fade
 	var pivot := root
@@ -49,8 +49,8 @@ func _place_decal():
 
 func _input(event):
 	var event_was_handled = false
-	var rot_iter = _get_editor_manager().rotation_step
-	var scale_step = _get_editor_manager().scale_step
+	var rot_iter = get_editor_manager().rotation_step
+	var scale_step = get_editor_manager().scale_step
 	var scale_iter = Vector3(scale_step, scale_step, scale_step)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -82,12 +82,15 @@ func _input(event):
 		viewport.set_input_as_handled()
 
 func _process(delta):
-	if not _get_editor_manager(): return
-	if not _get_editor_manager().enabled:
+	var editor_manager = get_editor_manager()
+	
+	if not editor_manager:
+		return
+	if not editor_manager.enabled:
 		if decal_dupe:
 			_remove_decal()
 		return
-	if not _get_editor_manager().has_items and not _get_editor_manager().selected_decal:
+	if not editor_manager.has_items and not editor_manager.selected_decal:
 		return
 	
 	var viewport = EditorInterface.get_editor_viewport_3d(0)
@@ -104,15 +107,22 @@ func _process(delta):
 		on_object = true
 		var collider: CollisionObject3D = result.collider
 		last_collider = collider
+		var hit_position: Vector3 = result.position
 		var normal: Vector3 = result.normal
 		
 		if type_exists("DebugDraw3D"):
-			Engine.get_singleton("DebugDraw3D").draw_line(result.position, result.position + normal, Color.RED)
+			Engine.get_singleton("DebugDraw3D").draw_line(hit_position, hit_position + normal, Color.RED)
 		
 		if not decal_dupe:
 			_create_decal()
 		elif decal_dupe:
-			decal_dupe.global_position = result.position
+			if editor_manager.enable_snap:
+				hit_position = hit_position.snapped(Vector3(
+					editor_manager.snap_step,
+					editor_manager.snap_step,
+					editor_manager.snap_step
+				))
+			decal_dupe.global_position = hit_position
 			decal_dupe.size = add_scale
 			var rotate_around = normal.cross(Vector3.UP).normalized()
 			if Vector3.UP.cross(normal) == Vector3.ZERO:
@@ -126,5 +136,5 @@ func _process(delta):
 		if last_collider and decal_dupe:
 			_remove_decal()
 
-func _get_editor_manager():
+func get_editor_manager():
 	return Engine.get_main_loop().root.get_node_or_null("SplasherEditorManager")
