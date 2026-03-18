@@ -1,15 +1,15 @@
 # Splasher (WIP)
 
-Godot addon for placing decals easily
+### Godot addon for placing decals easily.
 
-Drag your texture into Splasher and choose it
+Drag your texture into Splasher and select it.
 
-Models should have collision shapes to place decals on them
+Models must have collision shapes for this to work.
 
 ## Keybinds
 
-Shift + Mouse Wheel — rotate
-
-Ctrl + Mouse Wheel — scale
-
-LMB — place
+> Shift + Mouse Wheel — rotate
+>
+> Ctrl + Mouse Wheel — scale
+> 
+> LMB — place
