@@ -11,15 +11,8 @@ func _can_drop_data(at_position: Vector2, data):
 func _drop_data(at_position: Vector2, data):
 	var paths: PackedStringArray = data.files
 	for path in paths:
-		var image = Image.new()
-		if image.load(path) != OK:
-			continue
-		var texture = ImageTexture.create_from_image(image)
-		var index_of_last_slash = path.substr(RES_LENGTH).rfind("/")
-		if index_of_last_slash == -1:
-			index_of_last_slash = 0
-		var final_path = path.substr(RES_LENGTH).substr(index_of_last_slash)
-		var index = add_item(final_path, texture)
+		var final_path = path.substr(RES_LENGTH)
+		var index = add_item(final_path, ResourceLoader.load(path))
 		var editor_manager = get_editor_manager()
 		editor_manager.decal_list.push_back(path)
 		editor_manager.emit_changed()

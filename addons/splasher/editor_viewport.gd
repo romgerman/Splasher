@@ -11,29 +11,31 @@ var on_object = false
 var add_rotation_rad = 0.0
 var add_scale = Vector3(1.0, 1.0, 1.0)
 
+var editor_manager
+
 func _ready():
+	editor_manager = get_editor_manager()
 	decal = Decal.new()
-	decal.upper_fade
-	get_editor_manager().select_decal.connect(_decal_selected)
+
+	editor_manager.select_decal.connect(_decal_selected)
 
 func _decal_selected(path: String):
-	var texture = ImageTexture.create_from_image(Image.load_from_file(path))
-	decal.texture_albedo = texture
+	decal.texture_albedo = ResourceLoader.load(path)
 
 func _create_decal():
 	if decal_dupe: return
 	var root := EditorInterface.get_edited_scene_root()
 	decal_dupe = decal.duplicate()
 	decal_dupe.process_mode = Node.PROCESS_MODE_DISABLED
-	var upper_fade = get_editor_manager().upper_fade
-	var lower_fade = get_editor_manager().lower_fade
+	var upper_fade = editor_manager.upper_fade
+	var lower_fade = editor_manager.lower_fade
 	decal_dupe.upper_fade = upper_fade
 	decal_dupe.lower_fade = lower_fade
 	var pivot := root
 	var editor_selection := EditorInterface.get_selection()
 	if editor_selection.get_selected_nodes().size() == 1:
 		var selected_node := editor_selection.get_selected_nodes()[0]
-		if selected_node.get_parent():
+		if selected_node != root and selected_node.get_parent():
 			pivot = selected_node.get_parent()
 	pivot.add_child(decal_dupe, true)
 	decal_dupe.owner = root
@@ -49,8 +51,8 @@ func _place_decal():
 
 func _input(event):
 	var event_was_handled = false
-	var rot_iter = get_editor_manager().rotation_step
-	var scale_step = get_editor_manager().scale_step
+	var rot_iter = editor_manager.rotation_step
+	var scale_step = editor_manager.scale_step
 	var scale_iter = Vector3(scale_step, scale_step, scale_step)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -82,8 +84,6 @@ func _input(event):
 		viewport.set_input_as_handled()
 
 func _process(delta):
-	var editor_manager = get_editor_manager()
-	
 	if not editor_manager:
 		return
 	if not editor_manager.enabled:
@@ -110,8 +110,8 @@ func _process(delta):
 		var hit_position: Vector3 = result.position
 		var normal: Vector3 = result.normal
 		
-		if type_exists("DebugDraw3D"):
-			Engine.get_singleton("DebugDraw3D").draw_line(hit_position, hit_position + normal, Color.RED)
+		if has_debug_draw_3d():
+			get_debug_draw_3d().draw_line(hit_position, hit_position + normal, Color.RED)
 		
 		if not decal_dupe:
 			_create_decal()
@@ -136,5 +136,13 @@ func _process(delta):
 		if last_collider and decal_dupe:
 			_remove_decal()
 
+# Utils
+
 func get_editor_manager():
 	return Engine.get_main_loop().root.get_node_or_null("SplasherEditorManager")
+
+func has_debug_draw_3d():
+	return type_exists("DebugDraw3D")
+
+func get_debug_draw_3d():
+	return Engine.get_singleton("DebugDraw3D")
