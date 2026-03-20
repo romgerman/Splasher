@@ -5,7 +5,7 @@ const RAY_LENGTH = 100
 
 var decal: Decal
 var decal_dupe: Decal
-var last_collider: CollisionObject3D
+var last_collider
 
 var on_object = false
 var add_rotation_rad = 0.0
@@ -105,7 +105,7 @@ func _process(delta):
 	
 	if result:
 		on_object = true
-		var collider: CollisionObject3D = result.collider
+		var collider = result.collider
 		last_collider = collider
 		var hit_position: Vector3 = result.position
 		var normal: Vector3 = result.normal
