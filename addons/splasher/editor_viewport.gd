@@ -14,6 +14,8 @@ var add_scale = Vector3(1.0, 1.0, 1.0)
 var editor_manager
 
 func _ready():
+	if not Engine.is_editor_hint():
+		return
 	editor_manager = get_editor_manager()
 	decal = Decal.new()
 
@@ -50,6 +52,8 @@ func _place_decal():
 	decal_dupe = null
 
 func _input(event):
+	if not Engine.is_editor_hint():
+		return
 	var event_was_handled = false
 	var rot_iter = editor_manager.rotation_step
 	var scale_step = editor_manager.scale_step
@@ -84,6 +88,8 @@ func _input(event):
 		viewport.set_input_as_handled()
 
 func _process(delta):
+	if not Engine.is_editor_hint():
+		return
 	if not editor_manager:
 		return
 	if not editor_manager.enabled:
