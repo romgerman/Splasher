@@ -16,6 +16,8 @@ var editor_manager
 func _ready():
 	if not Engine.is_editor_hint():
 		return
+	# TODO: Redo this quick fix
+	await get_tree().process_frame
 	editor_manager = get_editor_manager()
 	decal = Decal.new()
 
