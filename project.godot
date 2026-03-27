@@ -16,7 +16,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SplasherEditorViewportAutoload="*res://addons/splasher/editor_viewport.tscn"
 SplasherEditorManager="*res://addons/splasher/editor_manager.tscn"
 SplasherEditorViewport="*res://addons/splasher/editor_viewport.tscn"
 

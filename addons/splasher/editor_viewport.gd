@@ -65,7 +65,7 @@ func _input(event):
 			var viewport = EditorInterface.get_editor_viewport_3d(0)
 			var mouse_pos = viewport.get_mouse_position()
 			var rect = viewport.get_visible_rect()
-			
+
 			if decal_dupe and on_object and rect.has_point(mouse_pos):
 				_place_decal()
 				event_was_handled = true
@@ -84,7 +84,7 @@ func _input(event):
 			elif decal_dupe and event.ctrl_pressed:
 				add_scale -= scale_iter
 				event_was_handled = true
-	
+
 	if event_was_handled:
 		var viewport = EditorInterface.get_editor_viewport_3d(0)
 		viewport.set_input_as_handled()
@@ -100,49 +100,56 @@ func _process(delta):
 		return
 	if not editor_manager.has_items and not editor_manager.selected_decal:
 		return
-	
+
 	var viewport = EditorInterface.get_editor_viewport_3d(0)
 	var camera = viewport.get_camera_3d()
 	var mouse_pos = viewport.get_mouse_position()
-	
+
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = camera.project_position(mouse_pos, RAY_LENGTH)
 	var space_state = get_tree().get_root().get_world_3d().get_direct_space_state()
 	var params = PhysicsRayQueryParameters3D.create(from, to)
 	var result = space_state.intersect_ray(params)
-	
+
 	if result:
-		on_object = true
-		var collider = result.collider
-		last_collider = collider
-		var hit_position: Vector3 = result.position
-		var normal: Vector3 = result.normal
-		
-		if has_debug_draw_3d():
-			get_debug_draw_3d().draw_line(hit_position, hit_position + normal, Color.RED)
-		
-		if not decal_dupe:
-			_create_decal()
-		elif decal_dupe:
-			if editor_manager.enable_snap:
-				hit_position = hit_position.snapped(Vector3(
-					editor_manager.snap_step,
-					editor_manager.snap_step,
-					editor_manager.snap_step
-				))
-			decal_dupe.global_position = hit_position
-			decal_dupe.size = add_scale
-			var rotate_around = normal.cross(Vector3.UP).normalized()
-			if Vector3.UP.cross(normal) == Vector3.ZERO:
-				decal_dupe.transform.basis = Basis(
-					Quaternion(normal, add_rotation_rad)
-				)
-			else:
-				decal_dupe.transform.basis = Basis(rotate_around, normal, normal.cross(rotate_around)).rotated(normal, add_rotation_rad)
+		on_ray_hit(result)
 	else:
 		on_object = false
 		if last_collider and decal_dupe:
 			_remove_decal()
+
+func on_ray_hit(hit) -> void:
+	on_object = true
+	var collider = hit.collider
+	last_collider = collider
+	var hit_position: Vector3 = hit.position
+	var normal: Vector3 = hit.normal
+
+	if has_debug_draw_3d():
+		get_debug_draw_3d().draw_line(hit_position, hit_position + normal, Color.RED)
+
+	if not decal_dupe:
+		_create_decal()
+
+	if editor_manager.enable_snap:
+		hit_position = hit_position.snapped(Vector3(
+			editor_manager.snap_step,
+			editor_manager.snap_step,
+			editor_manager.snap_step
+		))
+	decal_dupe.global_position = hit_position
+	decal_dupe.size = add_scale
+	var rotate_around = normal.cross(Vector3.UP).normalized()
+	if Vector3.UP.cross(normal) == Vector3.ZERO:
+		decal_dupe.transform.basis = Basis(
+			Quaternion(normal, add_rotation_rad)
+		)
+	else:
+		decal_dupe.transform.basis = Basis(
+			rotate_around,
+			normal,
+			normal.cross(rotate_around)
+		).rotated(normal, add_rotation_rad)
 
 # Utils
 
