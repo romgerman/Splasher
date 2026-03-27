@@ -20,13 +20,12 @@ jobs:
         shell: bash
         run: |
           ADDON_NAME='splasher'
-          ADDON_ZIP="${ADDON_NAME}.zip"
-          ADDON_FOLDER="${{ github.workspace }}/addons/${ADDON_NAME}/"
-          zip -r "${ADDON_ZIP}" "${ADDON_FOLDER}"
+          ADDON_ZIP="${{ github.workspace }}/${ADDON_NAME}.zip"
+          cd "${{ github.workspace }}/addons"
+          zip -r "${ADDON_ZIP}" "${ADDON_NAME}/"
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: "splasher"
-          path: |
-            ${{ github.workspace }}/splasher.zip
+          path: ${{ github.workspace }}/splasher.zip
           retention-days: 30
