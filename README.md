@@ -2,8 +2,10 @@
 
 ### Godot addon for placing decals easily.
 
-> [!NOTE]  
+> [!NOTE]
 > Supported engine versions: 4.3+
+
+![Preview](readme_images/Godot_v4.3-stable_win64_jj4G8zjsid.png)
 
 ## How to use
 
@@ -16,5 +18,5 @@ Models must have collision shapes for this to work.
 > Shift + Mouse Wheel — rotate
 >
 > Ctrl + Mouse Wheel — scale
-> 
+>
 > LMB — place
