@@ -21,4 +21,4 @@ SplasherEditorViewport="*res://addons/splasher/editor_viewport.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/splasher/plugin.cfg")
+enabled=PackedStringArray("res://addons/kenyoni/plugin_reloader/plugin.cfg", "res://addons/splasher/plugin.cfg")

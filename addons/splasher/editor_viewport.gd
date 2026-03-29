@@ -2,6 +2,11 @@
 extends Node3D
 
 const RAY_LENGTH = 100
+const SAFE_OFFSET = 0.05
+
+const Globals := preload("res://addons/splasher/globals.gd")
+
+@export_flags_3d_physics var temporary_layer: int
 
 var decal: Decal
 var decal_dupe: Decal
@@ -53,7 +58,7 @@ func _place_decal():
 	decal_dupe.process_mode = Node.PROCESS_MODE_INHERIT
 	decal_dupe = null
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if not Engine.is_editor_hint():
 		return
 	var event_was_handled = false
@@ -67,8 +72,11 @@ func _input(event):
 			var rect = viewport.get_visible_rect()
 
 			if decal_dupe and on_object and rect.has_point(mouse_pos):
-				_place_decal()
-				event_was_handled = true
+				# TODO: this
+				var viewport_toolbar: Control = Globals.get_editor_manager().viewport_panel.toolbar
+				if not viewport_toolbar.get_rect().has_point(mouse_pos):
+					_place_decal()
+					event_was_handled = true
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			if decal_dupe and event.shift_pressed:
@@ -123,41 +131,60 @@ func on_ray_hit(hit) -> void:
 	var collider = hit.collider
 	last_collider = collider
 	var hit_position: Vector3 = hit.position
-	var normal: Vector3 = hit.normal
+	var hit_normal: Vector3 = hit.normal
 
-	if has_debug_draw_3d():
-		get_debug_draw_3d().draw_line(hit_position, hit_position + normal, Color.RED)
+	if Globals.has_debug_draw_3d():
+		Globals.get_debug_draw_3d().draw_line(hit_position, hit_position + hit_normal, Color.RED)
 
 	if not decal_dupe:
 		_create_decal()
 
-	if editor_manager.enable_snap:
-		hit_position = hit_position.snapped(Vector3(
+	if editor_manager.decal_settings.p_grid_snap:
+		var snap_to := Vector3(
 			editor_manager.snap_step,
 			editor_manager.snap_step,
 			editor_manager.snap_step
-		))
+		)
+		hit_position = hit_position.snapped(snap_to)
+
 	decal_dupe.global_position = hit_position
 	decal_dupe.size = add_scale
-	var rotate_around = normal.cross(Vector3.UP).normalized()
-	if Vector3.UP.cross(normal) == Vector3.ZERO:
+
+	if editor_manager.decal_settings.p_auto_thickness:
+		var hit_collider = hit.collider
+		var hit_collider_layer = hit_collider.collision_layer
+		var hit_collider_mask = hit_collider.collision_mask
+
+		hit_collider.collision_layer = temporary_layer
+		hit_collider.collision_mask = temporary_layer
+
+		var from = hit_position + -hit_normal * RAY_LENGTH
+		var to = hit_position
+		var space_state = get_tree().get_root().get_world_3d().get_direct_space_state()
+		var params := PhysicsRayQueryParameters3D.create(from, to, temporary_layer)
+		var back_hit = space_state.intersect_ray(params)
+
+		if not back_hit.is_empty():
+			var thickness = hit_position.distance_to(back_hit.position)
+			decal_dupe.size.y = thickness
+			decal_dupe.global_position -= hit_normal * thickness * (0.5 - SAFE_OFFSET)
+
+		hit_collider.collision_layer = hit_collider_layer
+		hit_collider.collision_mask = hit_collider_mask
+
+	var rotate_around = hit_normal.cross(Vector3.UP).normalized()
+	if Vector3.UP.cross(hit_normal) == Vector3.ZERO:
 		decal_dupe.transform.basis = Basis(
-			Quaternion(normal, add_rotation_rad)
+			Quaternion(hit_normal, add_rotation_rad)
 		)
 	else:
 		decal_dupe.transform.basis = Basis(
 			rotate_around,
-			normal,
-			normal.cross(rotate_around)
-		).rotated(normal, add_rotation_rad)
+			hit_normal,
+			hit_normal.cross(rotate_around)
+		).rotated(hit_normal, add_rotation_rad)
 
 # Utils
 
 func get_editor_manager():
 	return Engine.get_main_loop().root.get_node_or_null("SplasherEditorManager")
-
-func has_debug_draw_3d():
-	return type_exists("DebugDraw3D")
-
-func get_debug_draw_3d():
-	return Engine.get_singleton("DebugDraw3D")

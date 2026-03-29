@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1yr17md187gx"]
+[gd_scene load_steps=5 format=3 uid="uid://d1yr17md187gx"]
 
 [ext_resource type="Script" path="res://addons/splasher/ui_viewport_panel.gd" id="1_jiic7"]
+[ext_resource type="Texture2D" uid="uid://im0hppjkagmf" path="res://addons/splasher/icons/ruler-measure-2.svg" id="2_d21xi"]
+[ext_resource type="Texture2D" uid="uid://b0pfrdlyx8c70" path="res://addons/splasher/icons/grid-3x3.svg" id="3_gxq02"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ho3n"]
+bg_color = Color(0, 0, 0, 0.784314)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="UiViewportPanel" type="MarginContainer"]
 anchors_preset = 15
@@ -8,9 +17,46 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 script = ExtResource("1_jiic7")
 
-[node name="InfoLabel" type="Label" parent="."]
+[node name="Toolbar" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7ho3n")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Toolbar"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="InfoLabel" type="Label" parent="Toolbar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Decal"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AutoThickness" type="Button" parent="Toolbar/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Automatically determine decal's thickness based on the size of a collider"
+toggle_mode = true
+icon = ExtResource("2_d21xi")
+flat = true
+
+[node name="GridSnap" type="Button" parent="Toolbar/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Snap to a custom grid"
+toggle_mode = true
+icon = ExtResource("3_gxq02")
+flat = true
+
+[connection signal="toggled" from="Toolbar/HBoxContainer/AutoThickness" to="." method="_on_auto_thickness_toggled"]
+[connection signal="toggled" from="Toolbar/HBoxContainer/GridSnap" to="." method="_on_grid_snap_toggled"]

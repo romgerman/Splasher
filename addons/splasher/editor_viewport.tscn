@@ -4,3 +4,4 @@
 
 [node name="editor_viewport" type="Node3D"]
 script = ExtResource("1_ja7y8")
+temporary_layer = 2147483648
