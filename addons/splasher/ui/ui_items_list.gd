@@ -21,6 +21,7 @@ const UIGridItem := preload("res://addons/splasher/ui/ui_grid_item.tscn")
 var presenter: Container
 var btn_group: ButtonGroup
 var right_clicked_item: Control
+var items_list
 
 func _ready() -> void:
 	# Hide all alerts by default
@@ -34,16 +35,23 @@ func _ready() -> void:
 	btn_group = ButtonGroup.new()
 	btn_group.pressed.connect(btn_group_pressed)
 
-	# List/Grid view
-	presenter = create_presenter(list_type)
-	scroll_container.add_child(presenter)
-
-	update_alerts()
-
 	var manager = Globals.get_editor_manager()
 	bind(manager.decal_list)
 
+	build_view()
+
+	manager.plugin_settings.changed.connect(func (prop_name: String, new_value: Variant, old_value: Variant):
+		if prop_name == "p_view_type":
+			if new_value == "list":
+				list_type = Type.List
+				build_view()
+			elif new_value == "grid":
+				list_type = Type.Grid
+				build_view()
+	)
+
 func bind(list) -> void:
+	items_list = list
 	list.added.connect(func (_index: int, item: Variant):
 		add_item(item)
 		update_alerts()
@@ -89,6 +97,25 @@ func item_mouse_input(event: InputEventMouseButton, ctrl: Control) -> void:
 		context_menu.reset_size()
 		context_menu.position = (event as InputEventMouseButton).global_position + Vector2(context_menu.size)
 		context_menu.popup()
+
+func build_view() -> void:
+	var has_pressed_btn := btn_group.get_pressed_button() != null
+
+	if presenter:
+		presenter.free()
+
+	presenter = create_presenter(list_type)
+	scroll_container.add_child(presenter)
+
+	for item in items_list.items:
+		add_item(item)
+
+	var index = Globals.get_editor_manager().selected_decal_index
+
+	if not items_list.is_empty() and has_pressed_btn:
+		presenter.get_child(index).btn.set_pressed_no_signal(true)
+
+	update_alerts()
 
 func btn_group_pressed(btn: BaseButton) -> void:
 	var ctrl := btn.get_parent()

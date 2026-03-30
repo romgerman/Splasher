@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://u7sc0tsagsqh"]
+
+[ext_resource type="Script" path="res://addons/splasher/ui/ui_dock_toolbar.gd" id="1_efxb4"]
+[ext_resource type="Texture2D" uid="uid://b8a0y5mi7pria" path="res://addons/splasher/icons/layout-list.svg" id="2_ia1jc"]
+[ext_resource type="Texture2D" uid="uid://250ybnuy2irj" path="res://addons/splasher/icons/layout-grid.svg" id="3_yvuho"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_7ohcl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4orpe"]
+bg_color = Color(0, 0, 0, 0.392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="UiDockToolbar" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_efxb4")
+view_type_group = SubResource("ButtonGroup_7ohcl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+scrollable = false
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4orpe")
+
+[node name="ViewToggle" type="HBoxContainer" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="ListView" type="Button" parent="HBoxContainer/PanelContainer/ViewToggle"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_7ohcl")
+icon = ExtResource("2_ia1jc")
+flat = true
+
+[node name="GridView" type="Button" parent="HBoxContainer/PanelContainer/ViewToggle"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_7ohcl")
+icon = ExtResource("3_yvuho")
+flat = true

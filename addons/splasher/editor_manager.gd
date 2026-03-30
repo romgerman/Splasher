@@ -3,7 +3,23 @@ extends Node
 
 const ObservableList := preload("res://addons/splasher/ui/observable_list.gd")
 
-class DecalSettings:
+class StoredSettings:
+	var storage: Dictionary = {}
+
+	signal changed(prop_name: String, new_value: Variant, old_value: Variant)
+
+	func get_property(prop_name: String) -> Variant:
+		return storage[prop_name]
+
+	func set_property(prop_name: String, new_value: Variant) -> void:
+		var old_value = storage[prop_name]
+		storage[prop_name] = new_value
+		emit_changed(prop_name, new_value, old_value)
+
+	func emit_changed(prop_name: String, new_value: Variant, old_value: Variant) -> void:
+		changed.emit(prop_name, new_value, old_value)
+
+class DecalSettings extends StoredSettings:
 	# Automatically determine decal's thickness based on the size of a collider
 	var p_auto_thickness: bool:
 		get:
@@ -20,25 +36,22 @@ class DecalSettings:
 
 	# -------
 
-	var settings_storage: Dictionary = {}
-
-	signal changed(prop_name: String, new_value: Variant, old_value: Variant)
-
 	func _init() -> void:
 		# Load initial values
-		settings_storage["p_auto_thickness"] = true
-		settings_storage["p_grid_snap"] = false
+		storage["p_auto_thickness"] = true
+		storage["p_grid_snap"] = false
 
-	func get_property(prop_name: String) -> Variant:
-		return settings_storage[prop_name]
+class PluginSettings extends StoredSettings:
+	var p_view_type: String:
+		get:
+			return get_property("p_view_type")
+		set(value):
+			set_property("p_view_type", value)
 
-	func set_property(prop_name: String, new_value: Variant) -> void:
-		var old_value = settings_storage[prop_name]
-		settings_storage[prop_name] = new_value
-		emit_changed(prop_name, new_value, old_value)
+	# -------
 
-	func emit_changed(prop_name: String, new_value: Variant, old_value: Variant) -> void:
-		changed.emit(prop_name, new_value, old_value)
+	func _init() -> void:
+		storage["p_view_type"] = "list"
 
 var enabled = false
 var selected_decal: String
@@ -48,12 +61,15 @@ var has_items: bool:
 	get:
 		return not decal_list.is_empty()
 
+# TODO: move to plugin settings
 var scale_step = 0.5
 var rotation_step = 0.05
 var snap_step = 0.5
 
-var decal_settings: DecalSettings = DecalSettings.new()
+var decal_settings := DecalSettings.new()
+var plugin_settings := PluginSettings.new()
 
+# TODO: move to decal settings
 var upper_fade = 0.3
 var lower_fade = 0.3
 
