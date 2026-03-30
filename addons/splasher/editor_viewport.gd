@@ -21,9 +21,7 @@ var editor_manager
 func _ready():
 	if not Engine.is_editor_hint():
 		return
-	# TODO: Redo this quick fix
-	await get_tree().process_frame
-	editor_manager = get_editor_manager()
+	editor_manager = Globals.get_editor_manager()
 	decal = Decal.new()
 
 	editor_manager.select_decal.connect(_decal_selected)
@@ -183,8 +181,3 @@ func on_ray_hit(hit) -> void:
 			hit_normal,
 			hit_normal.cross(rotate_around)
 		).rotated(hit_normal, add_rotation_rad)
-
-# Utils
-
-func get_editor_manager():
-	return Engine.get_main_loop().root.get_node_or_null("SplasherEditorManager")

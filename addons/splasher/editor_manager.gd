@@ -1,6 +1,8 @@
 @tool
 extends Node
 
+const ObservableList := preload("res://addons/splasher/ui/observable_list.gd")
+
 class DecalSettings:
 	# Automatically determine decal's thickness based on the size of a collider
 	var p_auto_thickness: bool:
@@ -40,7 +42,8 @@ class DecalSettings:
 
 var enabled = false
 var selected_decal: String
-var decal_list: Array[String] = []
+var selected_decal_index: int
+var decal_list: ObservableList = ObservableList.new()
 var has_items: bool:
 	get:
 		return not decal_list.is_empty()
@@ -57,10 +60,11 @@ var lower_fade = 0.3
 var viewport_panel: Control
 
 signal select_decal(path: String)
-signal changed
+signal changed()
 
 func emit_select_decal(index: int):
-	selected_decal = decal_list[index]
+	selected_decal = decal_list.get_item(index)
+	selected_decal_index = index
 	select_decal.emit(selected_decal)
 	changed.emit()
 

@@ -13,10 +13,10 @@ func _enter_tree():
 	add_autoload_singleton(Globals.EDITOR_VIEWPORT_NAME, "res://addons/splasher/editor_viewport.tscn")
 
 	dock = DockPanel.instantiate()
-	add_control_to_bottom_panel(dock, "Splasher")
+	add_control_to_bottom_panel.call_deferred(dock, "Splasher")
 
 	viewport_panel = ViewportPanel.instantiate()
-	get_editor_interface().get_editor_viewport_3d().get_parent().get_parent().add_child(viewport_panel, true)
+	get_editor_interface().get_editor_viewport_3d().get_parent().get_parent().add_child.call_deferred(viewport_panel, true)
 
 func _exit_tree():
 	viewport_panel.free()

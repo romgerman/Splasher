@@ -1,10 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0ikcvgtfkd2b"]
+[gd_scene load_steps=6 format=3 uid="uid://d0ikcvgtfkd2b"]
 
 [ext_resource type="Script" path="res://addons/splasher/ui_splasher_dock.gd" id="1_pthjc"]
-[ext_resource type="Script" path="res://addons/splasher/ui_item_list.gd" id="2_iex82"]
+[ext_resource type="PackedScene" uid="uid://cnved2nv5qvx5" path="res://addons/splasher/ui/ui_items_list.tscn" id="2_7dw0k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e4qao"]
 outline_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7inwl"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.147, 0.168, 0.203, 1)
+border_color = Color(0.084, 0.096, 0.116, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+anti_aliasing = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_avjfa"]
 outline_size = 1
@@ -67,16 +81,10 @@ layout_mode = 2
 step = 0.1
 value = 0.3
 
-[node name="ItemList" type="ItemList" parent="VBoxContainer"]
+[node name="UiItemsList" parent="VBoxContainer" instance=ExtResource("2_7dw0k")]
 layout_mode = 2
 size_flags_horizontal = 3
-allow_reselect = true
-fixed_icon_size = Vector2i(32, 32)
-script = ExtResource("2_iex82")
-
-[node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/ItemList"]
-item_count = 1
-item_0/text = "Remove"
+theme_override_styles/panel = SubResource("StyleBoxFlat_7inwl")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -132,9 +140,6 @@ value = 0.5
 [connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/toggle_plugin" to="." method="_on_toggle_plugin_toggled"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/UpperFadeLineEdit" to="." method="_on_upper_fade_line_edit_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/LowerFadeLineEdit" to="." method="_on_lower_fade_line_edit_value_changed"]
-[connection signal="item_clicked" from="VBoxContainer/ItemList" to="VBoxContainer/ItemList" method="_on_item_clicked"]
-[connection signal="item_selected" from="VBoxContainer/ItemList" to="VBoxContainer/ItemList" method="_on_item_selected"]
-[connection signal="id_pressed" from="VBoxContainer/ItemList/PopupMenu" to="VBoxContainer/ItemList" method="_on_popup_menu_id_pressed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer2/VBoxContainer2/VBoxContainer/ScaleSpinBox" to="." method="_on_scale_spin_box_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer2/VBoxContainer2/VBoxContainer/RotationSpinBox" to="." method="_on_rotation_spin_box_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer2/VBoxContainer2/VBoxContainer/SnapSpinBox" to="." method="_on_snap_spin_box_value_changed"]

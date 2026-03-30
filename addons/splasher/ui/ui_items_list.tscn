@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnved2nv5qvx5"]
+
+[ext_resource type="Script" path="res://addons/splasher/ui/ui_items_list.gd" id="1_or51t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yat71"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.147, 0.168, 0.203, 1)
+border_color = Color(0.084, 0.096, 0.116, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+anti_aliasing = false
+
+[node name="UiItemsList" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yat71")
+script = ExtResource("1_or51t")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Alerts" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EmptyList" type="Control" parent="Alerts"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Alerts/EmptyList"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "To add decals drag and drop them here from the FileSystem dock"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+item_count = 1
+item_0/text = "Remove"
+
+[connection signal="id_pressed" from="PopupMenu" to="." method="_on_popup_menu_id_pressed"]
