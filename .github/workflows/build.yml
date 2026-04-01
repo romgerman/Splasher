@@ -2,6 +2,8 @@ name: Pack addon
 
 on:
   workflow_dispatch:
+  push:
+    tags: ['v*']
 
 jobs:
   pack:
@@ -29,3 +31,19 @@ jobs:
           name: "splasher"
           path: ${{ github.workspace }}/splasher.zip
           retention-days: 30
+  release:
+    needs: pack
+    name: Release addon
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: "splasher"
+          path: dist/
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/**
+          generate_release_notes: true
