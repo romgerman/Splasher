@@ -79,14 +79,14 @@ func create_presenter(type: Type) -> Container:
 func add_item(item: Variant) -> void:
 	if list_type == Type.List:
 		var ctrl := UIListItem.instantiate()
-		presenter.add_child(ctrl)
-		ctrl.setup(item, btn_group)
+		ctrl.ready.connect(ctrl.setup.bind(item, btn_group), CONNECT_ONE_SHOT)
 		ctrl.mouse_input.connect(item_mouse_input.bind(ctrl))
+		presenter.add_child(ctrl)
 	elif list_type == Type.Grid:
 		var ctrl := UIGridItem.instantiate()
-		presenter.add_child(ctrl)
-		ctrl.setup(item, btn_group)
+		ctrl.ready.connect(ctrl.setup.bind(item, btn_group), CONNECT_ONE_SHOT)
 		ctrl.mouse_input.connect(item_mouse_input.bind(ctrl))
+		presenter.add_child(ctrl)
 
 func remove_item(index: int) -> void:
 	presenter.get_child(index).queue_free()
