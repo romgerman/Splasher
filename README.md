@@ -5,18 +5,29 @@
 > [!NOTE]
 > Supported engine versions: 4.3+
 
-![Preview](readme_images/Godot_v4.3-stable_win64_jj4G8zjsid.png)
+## Caveats
 
-## How to use
+- Models must have collision shapes for this to work.
+- Currently only albedo textures are supported.
 
-Drag your texture into Splasher and select it.
+## Features
 
-Models must have collision shapes for this to work.
+### Works with both mesh instances and CSG geometry
 
-## Keybinds
+### Auto detection of the collider thickness
 
-> Shift + Mouse Wheel — rotate
+![auto thickness detection](readme_images/Godot_v4.3-stable_win64_dyrHiUnnqW.png)
+
+### List/Grid view
+
+![list view](readme_images/Godot_v4.3-stable_win64_YetH25lbe2.png)
+
+![grid view](readme_images/Godot_v4.3-stable_win64_WdI7m5o6pS.png)
+
+## Keybinds (when in decal placement mode)
+
+> Shift + Mouse Wheel — rotate decal
 >
-> Ctrl + Mouse Wheel — scale
+> Ctrl + Mouse Wheel — scale decal
 >
-> LMB — place
+> LMB — place decal
