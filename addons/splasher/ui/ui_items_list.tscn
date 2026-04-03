@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnved2nv5qvx5"]
+[gd_scene load_steps=4 format=3 uid="uid://cnved2nv5qvx5"]
 
 [ext_resource type="Script" path="res://addons/splasher/ui/ui_items_list.gd" id="1_or51t"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yat71"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6oyqa"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -16,14 +16,17 @@ corner_radius_bottom_left = 3
 corner_detail = 3
 anti_aliasing = false
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_r4vnw"]
+
 [node name="UiItemsList" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_yat71")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6oyqa")
 script = ExtResource("1_or51t")
+btn_group = SubResource("ButtonGroup_r4vnw")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -34,7 +37,6 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="EmptyList" type="Control" parent="Alerts"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

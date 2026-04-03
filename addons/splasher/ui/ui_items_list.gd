@@ -13,13 +13,14 @@ const UIListItem := preload("res://addons/splasher/ui/ui_list_item.tscn")
 const UIGridItem := preload("res://addons/splasher/ui/ui_grid_item.tscn")
 
 @export var list_type: Type = Type.List
+# Button group for the item selection
+@export var btn_group: ButtonGroup
 
 @onready var alerts: Control = $Alerts
 @onready var scroll_container: ScrollContainer = $ScrollContainer
 @onready var context_menu: PopupMenu = $PopupMenu
 
 var presenter: Container
-var btn_group: ButtonGroup
 var right_clicked_item: Control
 var items_list
 
@@ -31,8 +32,6 @@ func _ready() -> void:
 	# Set the same style as the ItemList so it looks cohesive
 	set_default_theme()
 
-	# Button group for the item selection
-	btn_group = ButtonGroup.new()
 	btn_group.pressed.connect(btn_group_pressed)
 
 	var manager = Globals.get_editor_manager()

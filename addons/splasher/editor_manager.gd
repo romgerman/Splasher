@@ -16,6 +16,9 @@ class StoredSettings:
 		storage[prop_name] = new_value
 		emit_changed(prop_name, new_value, old_value)
 
+	func set_storage(dict: Dictionary) -> void:
+		storage.merge(dict, true)
+
 	func emit_changed(prop_name: String, new_value: Variant, old_value: Variant) -> void:
 		changed.emit(prop_name, new_value, old_value)
 

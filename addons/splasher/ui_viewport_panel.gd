@@ -15,10 +15,11 @@ func _ready() -> void:
 
 	enable(false)
 
-	# Initialize base on settings
+	# Initialize based on settings
 
 	var settings = Globals.get_editor_manager().decal_settings
 	auto_thickness_btn.set_pressed_no_signal(settings.p_auto_thickness)
+	grid_snap_btn.set_pressed_no_signal(settings.p_grid_snap)
 
 	# Connect change signal
 
