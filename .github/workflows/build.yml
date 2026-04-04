@@ -15,16 +15,20 @@ jobs:
       - name: Prepare addon
         shell: bash
         run: |
-          ADDON_NAME='splasher'
+          ADDON_NAME='romgerman.splasher'
           ADDON_FOLDER="${{ github.workspace }}/addons/${ADDON_NAME}/"
+          OUTPUT_FOLDER='${{ github.workspace }}/output/addons'
           cp --no-clobber '${{ github.workspace }}/README.md' '${{ github.workspace }}/LICENSE' "${ADDON_FOLDER}"
+          mkdir -p "${OUTPUT_FOLDER}"
+          cp "${ADDON_FOLDER}/" "${OUTPUT_FOLDER}"
       - name: Pack files into a .zip
         shell: bash
         run: |
-          ADDON_NAME='splasher'
-          ADDON_ZIP="${{ github.workspace }}/${ADDON_NAME}.zip"
-          cd "${{ github.workspace }}/addons"
-          zip -r "${ADDON_ZIP}" "${ADDON_NAME}/"
+          ADDON_NAME='romgerman.splasher'
+          OUTPUT_NAME='splasher'
+          ADDON_ZIP="${{ github.workspace }}/${OUTPUT_NAME}.zip"
+          cd "${{ github.workspace }}/output"
+          zip -r "${ADDON_ZIP}" 'addons/'
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
