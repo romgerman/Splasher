@@ -20,7 +20,7 @@ jobs:
           OUTPUT_FOLDER='${{ github.workspace }}/output/addons'
           cp --no-clobber '${{ github.workspace }}/README.md' '${{ github.workspace }}/LICENSE' "${ADDON_FOLDER}"
           mkdir -p "${OUTPUT_FOLDER}"
-          cp "${ADDON_FOLDER}/" "${OUTPUT_FOLDER}"
+          cp -r "${ADDON_FOLDER}" "${OUTPUT_FOLDER}"
       - name: Pack files into a .zip
         shell: bash
         run: |
