@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://250ybnuy2irj"
-path="res://.godot/imported/layout-grid.svg-73299b8f8abd06bb53eef4ad06394422.ctex"
+path="res://.godot/imported/layout-grid.svg-c0e7f8c887a09b81c58b4c7f89d3b7d6.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/splasher/icons/layout-grid.svg"
-dest_files=["res://.godot/imported/layout-grid.svg-73299b8f8abd06bb53eef4ad06394422.ctex"]
+source_file="res://addons/romgerman.splasher/icons/layout-grid.svg"
+dest_files=["res://.godot/imported/layout-grid.svg-c0e7f8c887a09b81c58b4c7f89d3b7d6.ctex"]
 
 [params]
 

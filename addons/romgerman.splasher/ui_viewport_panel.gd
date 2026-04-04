@@ -1,8 +1,8 @@
 @tool
 extends Control
 
-const Globals := preload("res://addons/splasher/globals.gd")
-const DecalPropsResource := preload("res://addons/splasher/decal_props.gd")
+const Globals := preload("res://addons/romgerman.splasher/globals.gd")
+const DecalPropsResource := preload("res://addons/romgerman.splasher/decal_props.gd")
 
 @onready var toolbar: Control = $Toolbar
 @onready var info_label: Label = $Toolbar/HBoxContainer/InfoLabel

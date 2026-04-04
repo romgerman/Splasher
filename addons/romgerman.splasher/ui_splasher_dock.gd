@@ -1,7 +1,7 @@
 @tool
 extends Control
 
-const Globals := preload("res://addons/splasher/globals.gd")
+const Globals := preload("res://addons/romgerman.splasher/globals.gd")
 
 @onready var toolbar: Control = $VBoxContainer/VBoxContainer/UiDockToolbar
 

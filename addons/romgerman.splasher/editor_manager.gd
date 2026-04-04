@@ -1,8 +1,8 @@
 @tool
 extends Node
 
-const ObservableList := preload("res://addons/splasher/ui/observable_list.gd")
-const DecalPropsResource := preload("res://addons/splasher/decal_props.gd")
+const ObservableList := preload("res://addons/romgerman.splasher/ui/observable_list.gd")
+const DecalPropsResource := preload("res://addons/romgerman.splasher/decal_props.gd")
 
 class StoredSettings:
 	var storage: Dictionary = {}

@@ -8,9 +8,9 @@ enum Type {
 	Grid
 }
 
-const Globals := preload("res://addons/splasher/globals.gd")
-const UIListItem := preload("res://addons/splasher/ui/ui_list_item.tscn")
-const UIGridItem := preload("res://addons/splasher/ui/ui_grid_item.tscn")
+const Globals := preload("res://addons/romgerman.splasher/globals.gd")
+const UIListItem := preload("res://addons/romgerman.splasher/ui/ui_list_item.tscn")
+const UIGridItem := preload("res://addons/romgerman.splasher/ui/ui_grid_item.tscn")
 
 @export var list_type: Type = Type.List
 # Button group for the item selection

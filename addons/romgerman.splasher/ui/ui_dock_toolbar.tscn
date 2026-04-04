@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://u7sc0tsagsqh"]
 
-[ext_resource type="Script" path="res://addons/splasher/ui/ui_dock_toolbar.gd" id="1_efxb4"]
-[ext_resource type="Texture2D" uid="uid://b8a0y5mi7pria" path="res://addons/splasher/icons/layout-list.svg" id="2_ia1jc"]
-[ext_resource type="Texture2D" uid="uid://250ybnuy2irj" path="res://addons/splasher/icons/layout-grid.svg" id="3_yvuho"]
+[ext_resource type="Script" path="res://addons/romgerman.splasher/ui/ui_dock_toolbar.gd" id="1_efxb4"]
+[ext_resource type="Texture2D" uid="uid://b8a0y5mi7pria" path="res://addons/romgerman.splasher/icons/layout-list.svg" id="2_ia1jc"]
+[ext_resource type="Texture2D" uid="uid://250ybnuy2irj" path="res://addons/romgerman.splasher/icons/layout-grid.svg" id="3_yvuho"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_7ohcl"]
 

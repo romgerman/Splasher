@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://d1yr17md187gx"]
 
-[ext_resource type="Script" path="res://addons/splasher/ui_viewport_panel.gd" id="1_jiic7"]
-[ext_resource type="Texture2D" uid="uid://im0hppjkagmf" path="res://addons/splasher/icons/ruler-measure-2.svg" id="2_d21xi"]
-[ext_resource type="Texture2D" uid="uid://b0pfrdlyx8c70" path="res://addons/splasher/icons/grid-3x3.svg" id="3_gxq02"]
-[ext_resource type="Texture2D" uid="uid://cf8x67lx8ukns" path="res://addons/splasher/icons/copy.svg" id="4_qia6k"]
+[ext_resource type="Script" path="res://addons/romgerman.splasher/ui_viewport_panel.gd" id="1_jiic7"]
+[ext_resource type="Texture2D" uid="uid://im0hppjkagmf" path="res://addons/romgerman.splasher/icons/ruler-measure-2.svg" id="2_d21xi"]
+[ext_resource type="Texture2D" uid="uid://b0pfrdlyx8c70" path="res://addons/romgerman.splasher/icons/grid-3x3.svg" id="3_gxq02"]
+[ext_resource type="Texture2D" uid="uid://cf8x67lx8ukns" path="res://addons/romgerman.splasher/icons/copy.svg" id="4_qia6k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ho3n"]
 content_margin_left = 2.0

@@ -16,9 +16,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SplasherEditorManager="*res://addons/splasher/editor_manager.tscn"
-SplasherEditorViewport="*res://addons/splasher/editor_viewport.tscn"
+SplasherEditorManager="*res://addons/romgerman.splasher/editor_manager.tscn"
+SplasherEditorViewport="*res://addons/romgerman.splasher/editor_viewport.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/kenyoni/plugin_reloader/plugin.cfg", "res://addons/splasher/plugin.cfg")
+enabled=PackedStringArray("res://addons/kenyoni/plugin_reloader/plugin.cfg", "res://addons/romgerman.splasher/plugin.cfg")

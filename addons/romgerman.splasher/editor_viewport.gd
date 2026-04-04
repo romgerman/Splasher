@@ -4,7 +4,7 @@ extends Node3D
 const RAY_LENGTH = 100
 const SAFE_OFFSET = 0.05
 
-const Globals := preload("res://addons/splasher/globals.gd")
+const Globals := preload("res://addons/romgerman.splasher/globals.gd")
 
 @export_flags_3d_physics var temporary_layer: int
 

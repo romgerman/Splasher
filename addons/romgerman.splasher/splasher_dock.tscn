@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://d0ikcvgtfkd2b"]
 
-[ext_resource type="Script" path="res://addons/splasher/ui_splasher_dock.gd" id="1_pthjc"]
-[ext_resource type="PackedScene" uid="uid://cnved2nv5qvx5" path="res://addons/splasher/ui/ui_items_list.tscn" id="2_7dw0k"]
-[ext_resource type="PackedScene" uid="uid://u7sc0tsagsqh" path="res://addons/splasher/ui/ui_dock_toolbar.tscn" id="3_bqp6d"]
+[ext_resource type="Script" path="res://addons/romgerman.splasher/ui_splasher_dock.gd" id="1_pthjc"]
+[ext_resource type="PackedScene" uid="uid://cnved2nv5qvx5" path="res://addons/romgerman.splasher/ui/ui_items_list.tscn" id="2_7dw0k"]
+[ext_resource type="PackedScene" uid="uid://u7sc0tsagsqh" path="res://addons/romgerman.splasher/ui/ui_dock_toolbar.tscn" id="3_bqp6d"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e4qao"]
 outline_size = 1

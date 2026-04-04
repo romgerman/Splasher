@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cnved2nv5qvx5"]
 
-[ext_resource type="Script" path="res://addons/splasher/ui/ui_items_list.gd" id="1_or51t"]
+[ext_resource type="Script" path="res://addons/romgerman.splasher/ui/ui_items_list.gd" id="1_or51t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6oyqa"]
 content_margin_left = 4.0

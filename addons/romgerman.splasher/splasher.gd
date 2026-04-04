@@ -1,19 +1,19 @@
 @tool
 extends EditorPlugin
 
-const Globals := preload("res://addons/splasher/globals.gd")
-const DockPanel := preload("res://addons/splasher/splasher_dock.tscn")
-const ViewportPanel := preload("res://addons/splasher/ui_viewport_panel.tscn")
-const StorageResource := preload("res://addons/splasher/storage.gd")
-const StoredDecalResource := preload("res://addons/splasher/stored_decal.gd")
+const Globals := preload("res://addons/romgerman.splasher/globals.gd")
+const DockPanel := preload("res://addons/romgerman.splasher/splasher_dock.tscn")
+const ViewportPanel := preload("res://addons/romgerman.splasher/ui_viewport_panel.tscn")
+const StorageResource := preload("res://addons/romgerman.splasher/storage.gd")
+const StoredDecalResource := preload("res://addons/romgerman.splasher/stored_decal.gd")
 
 var dock: Control
 var viewport_panel: Control
 var save_timer: Timer
 
 func _enter_tree():
-	add_autoload_singleton(Globals.EDITOR_MANAGER_NAME, "res://addons/splasher/editor_manager.tscn")
-	add_autoload_singleton(Globals.EDITOR_VIEWPORT_NAME, "res://addons/splasher/editor_viewport.tscn")
+	add_autoload_singleton(Globals.EDITOR_MANAGER_NAME, "res://addons/romgerman.splasher/editor_manager.tscn")
+	add_autoload_singleton(Globals.EDITOR_VIEWPORT_NAME, "res://addons/romgerman.splasher/editor_viewport.tscn")
 
 	if has_settings_file():
 		load_settings.call_deferred()

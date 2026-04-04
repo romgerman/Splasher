@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://tlu0i3trawm3"]
 
-[ext_resource type="Script" path="res://addons/splasher/ui/ui_list_item.gd" id="1_3hbfh"]
+[ext_resource type="Script" path="res://addons/romgerman.splasher/ui/ui_list_item.gd" id="1_3hbfh"]
 
 [node name="UiListItem" type="MarginContainer"]
 custom_minimum_size = Vector2(0, 64)
