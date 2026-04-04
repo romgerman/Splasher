@@ -5,6 +5,7 @@ const Globals := preload("res://addons/splasher/globals.gd")
 const DockPanel := preload("res://addons/splasher/splasher_dock.tscn")
 const ViewportPanel := preload("res://addons/splasher/ui_viewport_panel.tscn")
 const StorageResource := preload("res://addons/splasher/storage.gd")
+const StoredDecalResource := preload("res://addons/splasher/stored_decal.gd")
 
 var dock: Control
 var viewport_panel: Control
@@ -65,11 +66,17 @@ func save_settings() -> void:
 	var res := StorageResource.new()
 	res.decal_settings = manager.decal_settings.storage
 	res.plugin_settings = manager.plugin_settings.storage
+
+	for decal in manager.decal_list.items:
+		var stored_decal := StoredDecalResource.new()
+		stored_decal.albedo_path = decal
+		res.decal_registry.push_back(stored_decal)
+
 	if ResourceSaver.save(res, Globals.SAVE_FILE_PATH) != OK:
 		printerr("Couldn't save Splasher settings file")
 
 func load_settings() -> void:
-	var res := ResourceLoader.load(Globals.SAVE_FILE_PATH)
+	var res := ResourceLoader.load(Globals.SAVE_FILE_PATH) as StorageResource
 	if not res:
 		printerr("Couldn't load Splasher settings file")
 		return
@@ -77,6 +84,9 @@ func load_settings() -> void:
 	var manager = Globals.get_editor_manager()
 	manager.decal_settings.set_storage(res.decal_settings)
 	manager.plugin_settings.set_storage(res.plugin_settings)
+
+	for stored_decal: StoredDecalResource in res.decal_registry:
+		manager.decal_list.push_back(stored_decal.albedo_path)
 
 func has_settings_file() -> bool:
 	return ResourceLoader.exists(Globals.SAVE_FILE_PATH)
