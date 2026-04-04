@@ -1,15 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1yr17md187gx"]
+[gd_scene load_steps=7 format=3 uid="uid://d1yr17md187gx"]
 
 [ext_resource type="Script" path="res://addons/splasher/ui_viewport_panel.gd" id="1_jiic7"]
 [ext_resource type="Texture2D" uid="uid://im0hppjkagmf" path="res://addons/splasher/icons/ruler-measure-2.svg" id="2_d21xi"]
 [ext_resource type="Texture2D" uid="uid://b0pfrdlyx8c70" path="res://addons/splasher/icons/grid-3x3.svg" id="3_gxq02"]
+[ext_resource type="Texture2D" uid="uid://cf8x67lx8ukns" path="res://addons/splasher/icons/copy.svg" id="4_qia6k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ho3n"]
+content_margin_left = 2.0
+content_margin_right = 2.0
 bg_color = Color(0, 0, 0, 0.784314)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_y5mib"]
+color = Color(1, 1, 1, 1)
+grow_begin = -2.0
+grow_end = -2.0
+vertical = true
 
 [node name="UiViewportPanel" type="MarginContainer"]
 anchors_preset = 15
@@ -41,11 +50,12 @@ mouse_filter = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
-text = "decal placement"
+text = "Decal"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AutoThickness" type="Button" parent="Toolbar/HBoxContainer"]
+visible = false
 layout_mode = 2
 tooltip_text = "Automatically determine decal's thickness based on the size of a collider"
 toggle_mode = true
@@ -54,11 +64,23 @@ icon = ExtResource("2_d21xi")
 flat = true
 
 [node name="GridSnap" type="Button" parent="Toolbar/HBoxContainer"]
+visible = false
 layout_mode = 2
 tooltip_text = "Snap to a custom grid"
 toggle_mode = true
 icon = ExtResource("3_gxq02")
 flat = true
 
+[node name="VSeparator" type="VSeparator" parent="Toolbar/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_y5mib")
+
+[node name="CopyDecalProps" type="Button" parent="Toolbar/HBoxContainer"]
+visible = false
+layout_mode = 2
+tooltip_text = "Set current decal properties as defaults"
+icon = ExtResource("4_qia6k")
+
 [connection signal="toggled" from="Toolbar/HBoxContainer/AutoThickness" to="." method="_on_auto_thickness_toggled"]
 [connection signal="toggled" from="Toolbar/HBoxContainer/GridSnap" to="." method="_on_grid_snap_toggled"]
+[connection signal="pressed" from="Toolbar/HBoxContainer/CopyDecalProps" to="." method="_on_copy_decal_props_pressed"]

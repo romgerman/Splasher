@@ -35,6 +35,12 @@ func _exit_tree():
 	remove_autoload_singleton(Globals.EDITOR_VIEWPORT_NAME)
 	remove_autoload_singleton(Globals.EDITOR_MANAGER_NAME)
 
+func _handles(object: Object) -> bool:
+	return object is Decal
+
+func _make_visible(visible: bool) -> void:
+	viewport_panel.enable(visible)
+
 func _save_external_data() -> void:
 	if not save_timer.is_stopped():
 		save_timer.stop()
@@ -48,7 +54,7 @@ func watch_settings() -> void:
 	manager.plugin_settings.changed.connect(func (_p, _n, _o):
 		queue_settings_save()
 	)
-	manager.decal_settings.changed.connect(func (_p, _n, _o):
+	manager.decal_placement_settings.changed.connect(func (_p, _n, _o):
 		queue_settings_save()
 	)
 
@@ -64,7 +70,7 @@ func queue_settings_save() -> void:
 func save_settings() -> void:
 	var manager = Globals.get_editor_manager()
 	var res := StorageResource.new()
-	res.decal_settings = manager.decal_settings.storage
+	res.decal_placement_settings = manager.decal_placement_settings.storage
 	res.plugin_settings = manager.plugin_settings.storage
 
 	for decal in manager.decal_list.items:
@@ -82,7 +88,7 @@ func load_settings() -> void:
 		return
 
 	var manager = Globals.get_editor_manager()
-	manager.decal_settings.set_storage(res.decal_settings)
+	manager.decal_placement_settings.set_storage(res.decal_placement_settings)
 	manager.plugin_settings.set_storage(res.plugin_settings)
 
 	for stored_decal: StoredDecalResource in res.decal_registry:

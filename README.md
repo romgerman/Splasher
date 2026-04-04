@@ -12,17 +12,19 @@
 
 ## Features
 
-### Works with both mesh instances and CSG geometry
+- Works with both mesh instances and CSG geometry
 
-### Auto detection of the collider thickness
+- Auto detection of the collider thickness
 
-![auto thickness detection](readme_images/Godot_v4.3-stable_win64_dyrHiUnnqW.png)
+	![auto thickness detection](readme_images/Godot_v4.3-stable_win64_dyrHiUnnqW.png)
 
-### List/Grid view
+- List/Grid view
 
-![list view](readme_images/Godot_v4.3-stable_win64_YetH25lbe2.png)
+	![list view](readme_images/Godot_v4.3-stable_win64_YetH25lbe2.png)
 
-![grid view](readme_images/Godot_v4.3-stable_win64_WdI7m5o6pS.png)
+	![grid view](readme_images/Godot_v4.3-stable_win64_WdI7m5o6pS.png)
+
+- Easily copy decal properties to use them as the defaults when placing decals
 
 ## Keybinds (when in decal placement mode)
 

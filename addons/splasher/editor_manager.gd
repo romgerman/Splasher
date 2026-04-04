@@ -2,6 +2,7 @@
 extends Node
 
 const ObservableList := preload("res://addons/splasher/ui/observable_list.gd")
+const DecalPropsResource := preload("res://addons/splasher/decal_props.gd")
 
 class StoredSettings:
 	var storage: Dictionary = {}
@@ -22,7 +23,7 @@ class StoredSettings:
 	func emit_changed(prop_name: String, new_value: Variant, old_value: Variant) -> void:
 		changed.emit(prop_name, new_value, old_value)
 
-class DecalSettings extends StoredSettings:
+class DecalPlacementSettings extends StoredSettings:
 	# Automatically determine decal's thickness based on the size of a collider
 	var p_auto_thickness: bool:
 		get:
@@ -69,8 +70,9 @@ var scale_step = 0.5
 var rotation_step = 0.05
 var snap_step = 0.5
 
-var decal_settings := DecalSettings.new()
+var decal_placement_settings := DecalPlacementSettings.new()
 var plugin_settings := PluginSettings.new()
+var decal_defaults: DecalPropsResource = null
 
 # TODO: move to decal settings
 var upper_fade = 0.3

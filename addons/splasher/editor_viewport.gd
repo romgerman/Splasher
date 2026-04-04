@@ -8,7 +8,7 @@ const Globals := preload("res://addons/splasher/globals.gd")
 
 @export_flags_3d_physics var temporary_layer: int
 
-var decal: Decal
+var decal_ref: Decal
 var decal_dupe: Decal
 var last_collider
 
@@ -20,24 +20,33 @@ var editor_manager
 
 func _ready():
 	if not Engine.is_editor_hint():
+		queue_free()
 		return
+
 	editor_manager = Globals.get_editor_manager()
-	decal = Decal.new()
+	decal_ref = Decal.new()
 
-	editor_manager.select_decal.connect(_decal_selected)
+	editor_manager.select_decal.connect(on_decal_selected)
 
-func _decal_selected(path: String):
-	decal.texture_albedo = ResourceLoader.load(path)
+func on_decal_selected(path: String):
+	decal_ref.texture_albedo = ResourceLoader.load(path)
 
-func _create_decal():
-	if decal_dupe: return
+func create_decal_dupe():
+	if decal_dupe:
+		return
+
 	var root := EditorInterface.get_edited_scene_root()
-	decal_dupe = decal.duplicate()
+	decal_dupe = decal_ref.duplicate()
 	decal_dupe.process_mode = Node.PROCESS_MODE_DISABLED
-	var upper_fade = editor_manager.upper_fade
-	var lower_fade = editor_manager.lower_fade
-	decal_dupe.upper_fade = upper_fade
-	decal_dupe.lower_fade = lower_fade
+
+	if editor_manager.decal_defaults:
+		editor_manager.decal_defaults.apply_to(decal_dupe)
+	else:
+		var upper_fade = editor_manager.upper_fade
+		var lower_fade = editor_manager.lower_fade
+		decal_dupe.upper_fade = upper_fade
+		decal_dupe.lower_fade = lower_fade
+
 	var pivot := root
 	var editor_selection := EditorInterface.get_selection()
 	if editor_selection.get_selected_nodes().size() == 1:
@@ -135,9 +144,9 @@ func on_ray_hit(hit) -> void:
 		Globals.get_debug_draw_3d().draw_line(hit_position, hit_position + hit_normal, Color.RED)
 
 	if not decal_dupe:
-		_create_decal()
+		create_decal_dupe()
 
-	if editor_manager.decal_settings.p_grid_snap:
+	if editor_manager.decal_placement_settings.p_grid_snap:
 		var snap_to := Vector3(
 			editor_manager.snap_step,
 			editor_manager.snap_step,
@@ -148,7 +157,7 @@ func on_ray_hit(hit) -> void:
 	decal_dupe.global_position = hit_position
 	decal_dupe.size = add_scale
 
-	if editor_manager.decal_settings.p_auto_thickness:
+	if editor_manager.decal_placement_settings.p_auto_thickness:
 		var hit_collider = hit.collider
 		var hit_collider_layer = hit_collider.collision_layer
 		var hit_collider_mask = hit_collider.collision_mask
